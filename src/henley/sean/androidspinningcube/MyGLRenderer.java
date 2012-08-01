@@ -28,6 +28,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
 import android.util.Log;
+ import android.os.SystemClock;
  
  
 class MyGLRenderer implements GLSurfaceView.Renderer 
@@ -37,6 +38,9 @@ class MyGLRenderer implements GLSurfaceView.Renderer
 	private final float[] mProjMatrix = new float[16];
 	private final float[] mVMatrix = new float[16];
 	private final float[] mMVPMatrix = new float[16];
+	private final float[] mRotationMatrix = new float[16];
+	
+	private float mAngle = 0.0f;
 
 	void MyGLRenderer()
 	{
@@ -69,7 +73,15 @@ class MyGLRenderer implements GLSurfaceView.Renderer
 
 		// Calculate the projection and view transformation
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+		
+		// Create a rotation transformation for the triangle
+    long time = SystemClock.uptimeMillis() % 4000L;
+    mAngle += 1; //((int) time);
+    Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, -1.0f);
 
+    // Combine the rotation matrix with the projection and camera view
+    Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
+		
 		// Draw triangle
 		mTriangle.draw(mMVPMatrix);
 	}
