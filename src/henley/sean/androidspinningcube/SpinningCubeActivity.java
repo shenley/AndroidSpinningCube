@@ -23,54 +23,60 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-public class SpinningCubeActivity extends Activity {
+public class SpinningCubeActivity extends Activity
+{
+	private GLSurfaceView mGLView;
 
-    private GLSurfaceView mGLView;
+	@Override
+	public void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        Log.d("App State", "onCreate...");
+		Log.d("App State", "onCreate...");
 
-        // Create a GLSurfaceView instance and set it
-        // as the ContentView for this Activity
-        mGLView = new MyGLSurfaceView(this);
-        setContentView(mGLView);
-    }
+		// Create a GLSurfaceView instance and set it
+		// as the ContentView for this Activity
+		mGLView = new MyGLSurfaceView(this);
+		setContentView(mGLView);
+	}
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // The following call pauses the rendering thread.
-        // If your OpenGL application is memory intensive,
-        // you should consider de-allocating objects that
-        // consume significant memory here.
-        mGLView.onPause();
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // The following call resumes a paused rendering thread.
-        // If you de-allocated graphic objects for onPause()
-        // this is a good place to re-allocate them.
-        mGLView.onResume();
-    }
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		
+		// The following call pauses the rendering thread.
+		// If your OpenGL application is memory intensive,
+		// you should consider de-allocating objects that
+		// consume significant memory here.
+		mGLView.onPause();
+	}
+
+	@Override
+	protected void onResume() 
+	{
+		super.onResume();
+		
+		// The following call resumes a paused rendering thread.
+		// If you de-allocated graphic objects for onPause()
+		// this is a good place to re-allocate them.
+		mGLView.onResume();
+	}
 }
 
-class MyGLSurfaceView extends GLSurfaceView {
+class MyGLSurfaceView extends GLSurfaceView 
+{
+	public MyGLSurfaceView(Context context) 
+	{
+		super(context);
 
-    public MyGLSurfaceView(Context context) {
-        super(context);
+		// Create an OpenGL ES 2.0 context.
+		setEGLContextClientVersion(2);
 
-        // Create an OpenGL ES 2.0 context.
-        setEGLContextClientVersion(2);
+		// Set the Renderer for drawing on the GLSurfaceView
+		setRenderer(new MyGLRenderer());
 
-        // Set the Renderer for drawing on the GLSurfaceView
-        setRenderer(new MyGLRenderer());
-
-        // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-    }
+		// Render the view only when there is a change in the drawing data
+		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+	}
 }
