@@ -40,7 +40,7 @@ class MyGLRenderer implements GLSurfaceView.Renderer
 	private final float[] mMVPMatrix = new float[16];
 	private final float[] mRotationMatrix = new float[16];
 	
-	private float mAngle = 0.0f;
+	public float mAngle = 0.0f;
 
 	void MyGLRenderer()
 	{
@@ -71,8 +71,8 @@ class MyGLRenderer implements GLSurfaceView.Renderer
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 		
 		// Create a rotation transformation for the triangle
-    long time = SystemClock.uptimeMillis() % 4000L;
-    mAngle += 1; //((int) time);
+    //long time = SystemClock.uptimeMillis() % 4000L;
+    //mAngle += 1; //((int) time);
     Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, -1.0f);
 
     // Combine the rotation matrix with the projection and camera view
